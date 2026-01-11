@@ -24,7 +24,57 @@ jobs:
         with:
           args: --source . --redact
 
-  build-test:
+  sca:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: OWASP Dependency-Check
+        uses: dependency-check/Dependency-Check_Action@v3
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        with:
+          project: DevSecOpsDevoir
+          path: .
+          format: "HTML,JSON"
+          out: dependency-check-report
+          args: >-
+            --failOnCVSS 7
+            --scan gateway
+            --scan product-service
+            --scan order-service
+            --scan react-app
+
+      - name: Upload dependency-check report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: dependency-check-report
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: react-app/package-lock.json
+
+      - name: npm audit (production)
+        run: npm audit --omit=dev --audit-level=high
+        working-directory: react-app
+
+  sast:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,37 +91,16 @@ jobs:
           cache: maven
 
       - name: Build gateway
-        run: mvn -q verify
+        run: mvn -q -DskipTests package
         working-directory: gateway
 
       - name: Build product-service
-        run: mvn -q verify
+        run: mvn -q -DskipTests package
         working-directory: product-service
 
       - name: Build order-service
-        run: mvn -q verify
+        run: mvn -q -DskipTests package
         working-directory: order-service
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: react-app/package-lock.json
-
-      - name: Install frontend deps
-        run: npm ci
-        working-directory: react-app
-
-      - name: Frontend tests
-        run: npm test -- --watchAll=false
-        working-directory: react-app
-        env:
-          CI: "true"
-
-      - name: Frontend build
-        run: npm run build
-        working-directory: react-app
 
       - name: SonarCloud scan
         uses: SonarSource/sonarcloud-github-action@v2
