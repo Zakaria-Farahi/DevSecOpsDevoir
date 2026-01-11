@@ -100,7 +100,7 @@ jobs:
         run: docker build -t devsecops/react-app:ci ./react-app
 
       - name: Trivy scan - gateway
-        uses: aquasecurity/trivy-action@@0.33.1
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: devsecops/gateway:ci
           format: "table"
@@ -108,7 +108,7 @@ jobs:
           severity: "HIGH,CRITICAL"
 
       - name: Trivy scan - product-service
-        uses: aquasecurity/trivy-action@@0.33.1
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: devsecops/product-service:ci
           format: "table"
@@ -116,7 +116,7 @@ jobs:
           severity: "HIGH,CRITICAL"
 
       - name: Trivy scan - order-service
-        uses: aquasecurity/trivy-action@@0.33.1
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: devsecops/order-service:ci
           format: "table"
@@ -124,7 +124,7 @@ jobs:
           severity: "HIGH,CRITICAL"
 
       - name: Trivy scan - react-app
-        uses: aquasecurity/trivy-action@@0.33.1
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: devsecops/react-app:ci
           format: "table"
