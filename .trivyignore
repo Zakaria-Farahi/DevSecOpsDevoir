@@ -1,0 +1,6 @@
+# Ignore unfixable GnuPG vulnerability in Alpine base image
+CVE-2025-68973
+# Ignore unfixable libpng vulnerabilities in Alpine base image
+CVE-2025-64720
+CVE-2025-65018
+CVE-2025-66293
