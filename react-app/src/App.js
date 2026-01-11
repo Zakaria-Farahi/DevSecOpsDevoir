@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import axios from "axios";
 
 function App({ keycloak }) {
@@ -38,14 +39,16 @@ function App({ keycloak }) {
             <h2>React + Keycloak + API Gateway</h2>
 
             <p>
-                 Utilisateur : <b>{keycloak.idTokenParsed?.preferred_username}</b>
+                Utilisateur :{" "}
+                <b>{keycloak.idTokenParsed?.preferred_username}</b>
             </p>
             <p>
-                Email : <b>{keycloak.idTokenParsed?.email}</b>
+                Email :{" "}
+                <b>{keycloak.idTokenParsed?.email}</b>
             </p>
             <p>
-                 Rôles :
-                <b> {keycloak.tokenParsed?.realm_access?.roles.join(", ")}</b>
+                Rôles :{" "}
+                <b>{keycloak.tokenParsed?.realm_access?.roles?.join(", ")}</b>
             </p>
 
             <button onClick={callProducts}>
@@ -66,3 +69,20 @@ function App({ keycloak }) {
 }
 
 export default App;
+
+App.propTypes = {
+    keycloak: PropTypes.shape({
+        updateToken: PropTypes.func.isRequired,
+        token: PropTypes.string,
+        idTokenParsed: PropTypes.shape({
+            preferred_username: PropTypes.string,
+            email: PropTypes.string,
+        }),
+        tokenParsed: PropTypes.shape({
+            realm_access: PropTypes.shape({
+                roles: PropTypes.arrayOf(PropTypes.string),
+            }),
+        }),
+        logout: PropTypes.func.isRequired,
+    }).isRequired,
+};

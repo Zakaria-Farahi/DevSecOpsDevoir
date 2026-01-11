@@ -34,6 +34,9 @@ public class OrderController {
         String bearerToken = extractBearerToken(authentication);
         try {
             return productServiceClient.fetchProducts(bearerToken);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Product service call interrupted", ex);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Product service call failed", ex);
         }

@@ -17,8 +17,8 @@ product-service:
   base-url: ${PRODUCT_SERVICE_BASE_URL:https://localhost:8081}
   ssl:
     key-store: classpath:certs/client.p12
-    key-store-password: ${ORDER_SERVICE_CLIENT_KEYSTORE_PASSWORD}
+    key-store-password: ${ORDER_SERVICE_CLIENT_KEYSTORE_PASSWORD:changeit}
     key-store-type: PKCS12
     trust-store: classpath:certs/truststore.p12
-    trust-store-password: ${ORDER_SERVICE_TRUSTSTORE_PASSWORD}
+    trust-store-password: ${ORDER_SERVICE_TRUSTSTORE_PASSWORD:changeit}
     trust-store-type: PKCS12

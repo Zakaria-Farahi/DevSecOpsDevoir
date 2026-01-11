@@ -8,6 +8,7 @@ class OrderServiceApplicationTests {
 
     @Test
     void contextLoads() {
+        // Smoke test: verifies the Spring application context starts.
     }
 
 }

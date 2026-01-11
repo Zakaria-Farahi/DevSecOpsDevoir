@@ -30,6 +30,6 @@ spring:
 gateway:
   mtls:
     key-store: classpath:certs/client.p12
-    key-store-password: ${GATEWAY_MTLS_KEYSTORE_PASSWORD}
+    key-store-password: ${GATEWAY_MTLS_KEYSTORE_PASSWORD:changeit}
     trust-store: classpath:certs/truststore.p12
-    trust-store-password: ${GATEWAY_MTLS_TRUSTSTORE_PASSWORD}
+    trust-store-password: ${GATEWAY_MTLS_TRUSTSTORE_PASSWORD:changeit}
