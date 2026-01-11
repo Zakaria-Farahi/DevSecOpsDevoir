@@ -2,11 +2,11 @@ server:
   port: 8081
   ssl:
     key-store: classpath:certs/product-service.p12
-    key-store-password: changeit
+    key-store-password: ${PRODUCT_SERVICE_KEYSTORE_PASSWORD}
     key-store-type: PKCS12
     key-alias: product-service
     trust-store: classpath:certs/truststore.p12
-    trust-store-password: changeit
+    trust-store-password: ${PRODUCT_SERVICE_TRUSTSTORE_PASSWORD}
     trust-store-type: PKCS12
     client-auth: need
 
