@@ -8,6 +8,7 @@ class GatewayApplicationTests {
 
     @Test
     void contextLoads() {
+        // Standard Spring Boot test to verify application context starts successfully
     }
 
 }
