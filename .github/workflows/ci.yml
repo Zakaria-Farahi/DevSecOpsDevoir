@@ -30,6 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           submodules: recursive
 
       - name: Set up Java
@@ -71,3 +72,9 @@ jobs:
       - name: Frontend build
         run: npm run build
         working-directory: react-app
+
+      - name: SonarQube scan
+        uses: SonarSource/sonarqube-scan-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
