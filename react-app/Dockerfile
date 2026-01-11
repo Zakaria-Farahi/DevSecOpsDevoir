@@ -3,7 +3,7 @@ ARG REACT_APP_KEYCLOAK_URL=http://localhost:8080
 ENV REACT_APP_KEYCLOAK_URL=$REACT_APP_KEYCLOAK_URL
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 RUN npm run build
 
