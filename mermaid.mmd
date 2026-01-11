@@ -1,0 +1,24 @@
+flowchart TD
+    subgraph Keycloak["Keycloak"]
+        KC[Realm: microservices-realm]
+        KC --> TOK[JWT with realm_access.roles]
+    end
+
+    subgraph ProductService["Product Service"]
+        PS_JWT[JwtAuthenticationConverter]
+        PS_ROLES[Map realm roles -> ROLE_* authorities]
+        PS_METHOD[@PreAuthorize checks]
+        PS_CTRL[Controllers /products, /products/admin]
+        PS_JWT --> PS_ROLES --> PS_METHOD --> PS_CTRL
+    end
+
+    subgraph OrderService["Order Service"]
+        OS_JWT[JwtAuthenticationConverter]
+        OS_ROLES[Map realm roles -> ROLE_* authorities]
+        OS_METHOD[@PreAuthorize checks]
+        OS_CTRL[Controllers /orders, /orders/admin]
+        OS_JWT --> OS_ROLES --> OS_METHOD --> OS_CTRL
+    end
+
+    TOK --> PS_JWT
+    TOK --> OS_JWT
