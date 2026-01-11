@@ -30,7 +30,7 @@ jobs:
           distribution: temurin
           java-version: "21"
       - name: OWASP Dependency-Check
-        uses: dependency-check/Dependency-Check_Action@v1.1.0 # Fixed version
+        uses: dependency-check/Dependency-Check_Action@main
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
           JAVA_HOME: /opt/jdk 
