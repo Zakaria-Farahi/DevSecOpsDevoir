@@ -45,6 +45,7 @@ jobs:
         uses: dependency-check/Dependency-Check_Action@main
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          JAVA_HOME: /opt/jdk 
         with:
           project: DevSecOpsDevoir
           path: .
