@@ -76,6 +76,61 @@ jobs:
         run: npm audit --omit=dev --audit-level=high
         working-directory: react-app
 
+  image-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Build gateway image
+        run: docker build -t devsecops/gateway:ci ./gateway
+
+      - name: Build product-service image
+        run: docker build -t devsecops/product-service:ci ./product-service
+
+      - name: Build order-service image
+        run: docker build -t devsecops/order-service:ci ./order-service
+
+      - name: Build react-app image
+        run: docker build -t devsecops/react-app:ci ./react-app
+
+      - name: Trivy scan - gateway
+        uses: aquasecurity/trivy-action@@0.33.1
+        with:
+          image-ref: devsecops/gateway:ci
+          format: "table"
+          exit-code: "1"
+          severity: "HIGH,CRITICAL"
+
+      - name: Trivy scan - product-service
+        uses: aquasecurity/trivy-action@@0.33.1
+        with:
+          image-ref: devsecops/product-service:ci
+          format: "table"
+          exit-code: "1"
+          severity: "HIGH,CRITICAL"
+
+      - name: Trivy scan - order-service
+        uses: aquasecurity/trivy-action@@0.33.1
+        with:
+          image-ref: devsecops/order-service:ci
+          format: "table"
+          exit-code: "1"
+          severity: "HIGH,CRITICAL"
+
+      - name: Trivy scan - react-app
+        uses: aquasecurity/trivy-action@@0.33.1
+        with:
+          image-ref: devsecops/react-app:ci
+          format: "table"
+          exit-code: "1"
+          severity: "HIGH,CRITICAL"
+
   sast:
     runs-on: ubuntu-latest
     steps:
