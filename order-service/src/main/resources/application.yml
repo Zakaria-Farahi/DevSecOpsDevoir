@@ -2,9 +2,13 @@ server:
   port: 8082
   ssl:
     key-store: classpath:certs/order-service.p12
-    key-store-password: ${ORDER_SERVICE_KEYSTORE_PASSWORD}
+    key-store-password: ${ORDER_SERVICE_KEYSTORE_PASSWORD:changeit}
     key-store-type: PKCS12
     key-alias: order-service
+    trust-store: classpath:certs/truststore.p12
+    trust-store-password: ${ORDER_SERVICE_TRUSTSTORE_PASSWORD:changeit}
+    trust-store-type: PKCS12
+    client-auth: need
 
 spring:
   security:

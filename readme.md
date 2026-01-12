@@ -31,7 +31,7 @@ ce bearer JWT à l’API Gateway pour chaque requête. L’API Gateway valide lo
 vers Product Service en mTLS + JWT et vers Order Service en TLS + JWT. Lorsque Order Service doit interroger Product Service, il utilise également mTLS + JWT. Ainsi, l’authentification est centralisée par Keycloak (OIDC + JWT), la
 validation se fait localement via JWKS, et les échanges sensibles entre services utilisent le mTLS.
 
-![arch de projet](image.png)
+![arch](image-14.png)
 
 ## Diagramme de séquence
 
@@ -41,7 +41,7 @@ L'API Gateway agit comme le premier rempart de sécurité : il intercepte le jet
 
 Enfin, chaque micro-service maintient une autonomie de sécurité en validant à son tour le JWT via JWKS, assurant une propagation sécurisée de l'identité de l'utilisateur tout au long de la chaîne de traitement.
 
-![Diagramme de seq](image-1.png)
+![diagSeq](image-13.png)
 
 ## Configuration
 ### KeyCloak
